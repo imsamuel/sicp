@@ -7,5 +7,3 @@
   (cond ((and (< a b) (< a c)) (+ (square b) (square c)))
         ((and (< b a) (< b c)) (+ (square a) (square c)))
         (else (+ (square a) (square b)))))
-
-(sum-of-squares 10 0 5)
