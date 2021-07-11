@@ -12,7 +12,7 @@
      3))
 
 (define (good-enough guess x)
-  (<= (abs (- x (cube guess))) 0.001))
+  (< (abs (- x (cube guess))) 0.001))
 
 (define (cbrt-iter guess x)
   (cond ((good-enough guess x) guess)
