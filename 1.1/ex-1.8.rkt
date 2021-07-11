@@ -19,5 +19,5 @@
   (else (cbrt-iter (improve guess x) x))))
 
 (define (cbrt x)
-  (cbrt-iter 1 x))
+  (cbrt-iter 1.0 x))
 
