@@ -5,6 +5,7 @@
 > Procedures in the sense of SICP is the code you write, even if you may call that code functions or classes, if the code defines operations on data and isn't the data itself.
 
 > The contrast between a procedure and process is similar to programs in your computer's hard drive and in it's RAM. A program stored in a file is an executable. On the other hand a script, or a program that you launched is a process. How that process behaves depends on the procedure that defines it, the environment in which it runs, available resources, and the type of evaluation model (normal order and applicative order evaluation will generate different processes for the same procedure). For example, a small finite procedure could produce an infinite process or a process that fails to continue because of a lack of resources (regarding available resources). 
+>
 > &mdash; <cite>[Bunyk](https://stackoverflow.com/a/65519063)</cite> (on Stack Overflow)
 
 **Recursion and Iteration**
