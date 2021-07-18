@@ -14,14 +14,12 @@
                  (* 3 (f-recursive (- n 3)))))))
 
 (define (f-iterative n)
-   (if (< n 3)
-       n
-       (f-iterative-iter 2 1 0 n)))
+  (cond ((< n 3 ) n)
+        (else (f-iterative-iter 2 1 0 n))))
 
 (define (f-iterative-iter a b c count)
-   (if (< count 3)
-       a
-       (f-iterative-iter (+ a (* 2 b) (* 3 c))
-               a
-               b
-               (- count 1))))
+  (cond ((< count 3) a)
+        (else (f-iterative-iter (+ a (* 2 b) (* 3 c))
+                                a
+                                b
+                                (- count 1)))))
