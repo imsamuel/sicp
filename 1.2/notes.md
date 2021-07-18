@@ -34,4 +34,11 @@ While you can write tail-recursive algorithms in C, there is no guarantee that t
 
 In modern C this is a quality of implementation issue. For example, GCC has been able to optimize many instances of tail recursion into equivalent iteration for many years now. Still, the key difference in comparison to Scheme is that Scheme **guarantees** tail call elimination, while C doesn't and is unlikely to do so.
 
+**Tree Recursion**
+
+Another common pattern of computation is called *tree recursion*. It is just a phrase to describe when you make a recursive call more than once in your recursive case. The evolution of a tree-recursive process looks like a tree, as the branches split into two or more at each level each time the procedure is invoked.
+
+The process uses a number of steps that grow **exponentially** with the input. On the other hand, the space required grows only linearly with the input, because we need keep track only of which nodes are above us in the tree at any point in the computation.
+
+One should not conclude from this that tree-recursive processes are useless. When we consider processes that operate on **** rather than numbers, we will find that tree recursion is a natural and powerful tool. But even in numerical operations, tree-recursive processes can be useful in helping us to understand and design programs. For instance, although the implementation of `fib` as a recursive process is much less efficient than the second one, it is more straightforward, being little more than a translation into Lisp of the definition of the Fibonacci sequence. To formulate the iterative algorithm required **noticing** that the computation could be recast as an iteration with three state variables.
 
