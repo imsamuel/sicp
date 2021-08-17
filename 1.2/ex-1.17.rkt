@@ -21,9 +21,3 @@
   (cond ((= b 0) 0)
         ((even? b) (double (multiply a (halve b))))
         (else (+ a (multiply a (- b 1))))))
-
-(define (double x)
-  (* 2 x))
-
-(define (halve x)
-  (/ x 2))
