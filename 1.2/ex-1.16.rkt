@@ -24,6 +24,3 @@
         (else (fast-expt-iter b
                               (- n 1)
                               (* a b)))))
-
-(define (even? n)
-  (= (remainder n 2) 0))
