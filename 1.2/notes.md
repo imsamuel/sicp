@@ -49,3 +49,32 @@ Processes can differ considerably in the rates at which they consume computation
 Let *n* be a parameter that measures the size of the problem, and let *R*(*n*) be the amount of resources the process requires for a problem of size *n*. We say that *R*(*n*) has order of growth O(*f*(*n*)), written *R*(*n*) = O(*f*(*n*)) (pronounced "theta of *f*(*n*)"), if there are positive constants *k1* and *k2* independent of *n* such that *k1f*(*n*) ≤ *R*(*n*) ≤ *k2f*(*n*) for any sufficiently large value of *n*. (In other words, for large *n*, the value *R*(*n*) is sandwiched between *k1f*(*n*) and *k2f*(*n*).)
 
 Orders of growth provide only a **crude** description of the behavior of a process. For example, a process requiring *n*^2 steps and a process requiring 1000*n*^2 steps and a process requiring 3*n*^2 + 10*n* + 17 steps all have O(*n*^2) order of growth. On the other hand, order of growth provides a useful indication of how we may expect the behavior of the process to change as we change the size of the problem. For a O(*n*) (linear) process, doubling the size will roughly double the amount of resources used. For an exponential process, each increment in problem size will multiply the resource utilization by a constant factor.
+
+**Greatest Common Divisor**
+
+The greatest common divisor (GCD) of two integers *a* and *b* is the largest integer that divides both *a* and *b* with no remainder. For example, the GCD of 16 and 28 is 4.
+
+In [Chapter 2](https://sarabander.github.io/sicp/html/Chapter-2.xhtml#Chapter-2), when we investigate how to implement rational-number arithmetic (ratio of two integers), we will need to be able to compute GCDs in order to reduce rational numbers to lowest terms. (To reduce a rational number to lowest terms, we must divide both the numerator and denominator by their GCD. For example, 16/28 reduces to 4/7.) 
+
+One way to find the GCD of two integers is to factor them and search for common factors, but there is a famous algorithm that is much more efficient.
+
+The algorithm is based on the observation that, if *r* is the remainder when *a* is divided by *b*, then the common divisors of *a* and *b* are precisely as the common divisors of *b* and *r*. Thus, we can use the equation
+
+![equation](https://latex.codecogs.com/svg.latex?GCD%28a%2Cb%29%20%3D%20GCD%28b%2Cr%29)
+
+to successively reduce the problem of computing a GCD to the problem of computing the GCD ot smaller and smaller pairs of integers. For example,
+
+![equation](https://latex.codecogs.com/svg.latex?GCD%28206%2C40%29)
+
+![equation](https://latex.codecogs.com/svg.latex?%3D%20GCD%2840%2C6%29)
+
+![equation](https://latex.codecogs.com/svg.latex?%3D%20GCD%286%2C4%29)
+
+![equation](https://latex.codecogs.com/svg.latex?%3D%20GCD%284%2C2%29)
+
+![equation](https://latex.codecogs.com/svg.latex?%3D%20GCD%282%2C0%29)
+
+![equation](https://latex.codecogs.com/svg.latex?%3D%202)
+
+reduces GCD(206, 40) to GCD(2, 0), which is 2. It is possible to show that starting with any two positive integers and performing repeated reductions will always eventually produce a pair where the second number is 0. Then the GCD is the other number in the pair. This method for computing the GCD is known as *Euclid's Algorithm*.
+
