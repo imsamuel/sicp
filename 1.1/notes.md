@@ -33,7 +33,7 @@ Lisp uses applicative-order evaluation, partly because of the additional efficie
 
 **Normal-order evaluation in-depth**
 
-()
+(From [*Gilles 'SO- stop being evil'*](https://cs.stackexchange.com/a/54004) on cs.stackexchange)
 
 Normal-order evaluation goes "fully expand and then reduce", meaning that function calls are expanded before reducing the arguments. and the reduction only happens when the value is needed. Let's take one of the examples in the book: start from `(sum-of-squares (+ 5 1) (* 5 2))`. First, we fully expand the definition of `sum-of-squares`:
 
