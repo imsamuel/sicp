@@ -78,3 +78,65 @@ to successively reduce the problem of computing a GCD to the problem of computin
 
 reduces GCD(206, 40) to GCD(2, 0), which is 2. It is possible to show that starting with any two positive integers and performing repeated reductions will always eventually produce a pair where the second number is 0. Then the GCD is the other number in the pair. This method for computing the GCD is known as *Euclid's Algorithm*.
 
+**Testing for Primality**
+
+This section describes two methods for checking the primality of an integer *n*, one with order of growth Θ(√*n*), and a "probabilistic" algorithm with order of growth Θ(log*n*). 
+
+**Searching for divisors**
+
+Since ancient times, mathematicians have been fascinated by problems concerning prime numbers, and many people have worked on the problem of determining ways to test if numbers are prime. One way to test if a number is prime is to find the number's divisors. The following program finds the smallest integral divisor (greater than 1) of a given number *n*. It does this in a straightforward way, by testing *n* for divisibility by successive integers starting with 2.
+
+```scheme
+(define (smallest-divisor n)
+  (find-divisor n 2))
+
+(define (find-divisor n test-divisor)
+  (cond ((> (square test-divisor) n) 
+         n)
+        ((divides? test-divisor n) 
+         test-divisor)
+        (else (find-divisor 
+               n 
+               (+ test-divisor 1)))))
+
+(define (divides? a b)
+  (= (remainder b a) 0))
+```
+
+We can test whether a number is prime as follows: *n* is prime if and only if *n* is its own smallest divisor.
+
+```scheme
+(define (prime? n)
+  (= n (smallest-divisor n)))
+```
+
+The end test for `find-divisor` is based on the fact that [if *n* is not prime it must have a divisor less than or equal to √*n*](https://sarabander.github.io/sicp/html/1_002e2.xhtml#FOOT44). This means that the algorithm need only test divisors between 1 and √*n*. Consequently, the number of steps required to identify *n* as prime will have order of growth Θ(√*n*).
+
+**The Fermat test**
+
+The Θ(log*n*) primality test is based on a result from number theory known as [Fermat's Little Theorem](https://sarabander.github.io/sicp/html/1_002e2.xhtml#FOOT45).
+
+**Fermat's Little Theorem:** If *n* is a prime number and *a* is any positive integer less than *n*, than *a* raised to the *nth* power is congruent to *a* modulo *n*.
+
+(Two numbers are said to be *congruent modulo n* if they both have the same remainder when divided by *n*. The remainder of a number *a* when divided by *n* is also referred to as the *remainder of a modulo n*, or simply as *a modulo n*.)
+
+If *n* is not prime, then in general, most of the numbers *a* < *n* will not satisfy the above relation. This leads to the following algorithm for testing primality: Given a number *n*, pick a random number *a* < *n* and compute the remainder of *a^n* modulo *n*. If the result is not equal to *a*, then *n* is certainly not prime. If it is *a*, then chances are good that *n* is prime. Now pick another random number *a* and test it with the same method. If it also satisfied the equation, then we can be even more confident that *n* is prime. By trying more and more values of *a*, we can increase our confidence in the result. This algorithm is known as the Fermat test.
+
+To implement the Fermat test, we need a procedure that computes the exponential of a number modulo another number:
+
+```scheme
+(define (expmod base exp m)
+  (cond ((= exp 0) 1)
+        ((even? exp)
+         (remainder 
+          (square (expmod base (/ exp 2) m))
+          m))
+        (else
+         (remainder 
+          (* base (expmod base (- exp 1) m))
+          m))))
+```
+
+This is very similar to the `fast-expt` procedure of [1.2.4](https://sarabander.github.io/sicp/html/1_002e2.xhtml#g_t1_002e2_002e4). It uses successive squaring, so that the number of steps grows logarithmically with the exponent.
+
+The reduction steps in the cases where the exponent *e* is greater than 1 are based on the fact that, for any integers *x*, *y*, and *m*, we can fnd the remainder of *x* times *y* modulo *m* by computing separately the remainders of *x* modulo *m* and *y* modulo *m*, multiplying these, and then taking the remainder of the result modulo *m*. For instance, in the case where *e* is even, we compute the remainder of *b*^*e*/2 modulo *m*, square this, and take the remainder modulo *m*. This technique is useful because it means we can perform our computation without ever having to deal with numbers much larger than *m*.
