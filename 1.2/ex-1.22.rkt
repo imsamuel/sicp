@@ -50,10 +50,6 @@
   (cond ((prime? n)(report-prime (- (current-inexact-milliseconds)
                                     start-time)))))
 
-(define (report-prime elapsed-time)
-  (display " *** ")
-  (display elapsed-time))
-
 (define (prime? x)
   (= (smallest-divisor x) x))
 
@@ -65,3 +61,7 @@
         ((= (remainder x test-divisor) 0) test-divisor)
         (else (find-divisor x
                             (+ test-divisor 1)))))
+
+(define (report-prime elapsed-time)
+  (display " *** ")
+  (display elapsed-time))
