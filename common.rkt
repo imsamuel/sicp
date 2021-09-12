@@ -1,6 +1,11 @@
 #lang racket/base
 
-(provide square cube even? double halve)
+(provide square
+         cube
+         even?
+         double
+         halve
+         fast-expt)
 
 (define (square x)
   (* x x))
@@ -16,3 +21,10 @@
 
 (define (halve x)
   (/ x 2))
+
+(define (fast-expt base expt)
+  (cond ((= expt 0) 1)
+        ((even? expt) (square (fast-expt base
+                                         (/ expt 2))))
+        (else (* base (fast-expt base
+                                 (- expt 1))))))
